@@ -12,24 +12,24 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar bg-base-100">
+    <div className="navbar bg-base-100 shadow-lg">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost normal-case text-xl">MonApp</Link>
       </div>
       <div className="flex-none">
         {isAuthenticated ? (
           <>
-            <Link to="/dashboard" className="btn btn-ghost">Dashboard</Link>
-            <button onClick={handleLogout} className="btn btn-ghost">Déconnexion</button>
+            <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn">Dashboard</Link>
+            <button onClick={handleLogout} className="btn btn-ghost btn-sm rounded-btn">Déconnexion</button>
           </>
         ) : (
           <>
-            <Link to="/login" className="btn btn-ghost">Connexion</Link>
-            <Link to="/register" className="btn btn-ghost">Inscription</Link>
+            <Link to="/login" className="btn btn-primary btn-sm rounded-btn mr-2">Connexion</Link>
+            <Link to="/register" className="btn btn-secondary btn-sm rounded-btn">Inscription</Link>
           </>
         )}
       </div>
-    </nav>
+    </div>
   );
 };
 

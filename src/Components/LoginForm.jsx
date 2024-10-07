@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 
 const LoginForm = () => {
@@ -10,7 +10,6 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ici, vous devriez implémenter la vérification réelle des identifiants
     if (email && password) {
       login();
       navigate('/dashboard');
@@ -18,29 +17,49 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="card w-96 bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title">Connexion</h2>
-          <input
-            type="email"
-            placeholder="Email"
-            className="input input-bordered w-full max-w-xs"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Mot de passe"
-            className="input input-bordered w-full max-w-xs"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary" type="submit">Se connecter</button>
-          </div>
+    <div className="hero min-h-screen bg-base-200">
+      <div className="hero-content flex-col lg:flex-row-reverse">
+        <div className="text-center lg:text-left">
+          <h1 className="text-5xl font-bold">Connexion</h1>
+          <p className="py-6">Connectez-vous pour accéder à votre espace personnel.</p>
         </div>
-      </form>
+        <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <form onSubmit={handleSubmit} className="card-body">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Email</span>
+              </label>
+              <input
+                type="email"
+                placeholder="email"
+                className="input input-bordered"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Mot de passe</span>
+              </label>
+              <input
+                type="password"
+                placeholder="mot de passe"
+                className="input input-bordered"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <label className="label">
+                <Link to="/register" className="label-text-alt link link-hover">Pas de compte ? S'inscrire</Link>
+              </label>
+            </div>
+            <div className="form-control mt-6">
+              <button className="btn btn-primary" type="submit">Connexion</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
