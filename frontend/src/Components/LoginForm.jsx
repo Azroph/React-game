@@ -7,21 +7,44 @@ import * as Yup from 'yup';
 const LoginForm = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false); // Gestion de l'affichage du mot de passe
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
-  // Schéma de validation avec Yup
   const validationSchema = Yup.object({
     email: Yup.string().email('Email invalide').required('Email requis'),
     password: Yup.string().required('Mot de passe requis')
   });
 
-  // Gestion de la soumission du formulaire
-  const handleSubmit = (values) => {
-    login();  // Appelle la fonction login
-    navigate('/dashboard');
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const response = await fetch('http://votre-api.com/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la connexion');
+      }
+
+      const data = await response.json();
+      const { token } = data;
+      localStorage.setItem('token', token);
+      login();  // Met à jour le contexte d'authentification
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Erreur de connexion', error);
+      setLoginError('Identifiants incorrects. Veuillez réessayer.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  // Fonction pour basculer entre l'affichage et le masquage du mot de passe
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -40,7 +63,7 @@ const LoginForm = () => {
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
             >
-              {() => (
+              {({ isSubmitting }) => (
                 <Form>
                   <div className="form-control">
                     <label className="label">
@@ -60,12 +83,11 @@ const LoginForm = () => {
                     </label>
                     <div className="relative">
                       <Field
-                        type={showPassword ? "text" : "password"} // Change de type selon l'état
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         placeholder="mot de passe"
                         className="input input-bordered w-full pr-12"
                       />
-                      {/* Bouton pour basculer la visibilité du mot de passe */}
                       <button
                         type="button"
                         onClick={togglePasswordVisibility}
@@ -79,8 +101,11 @@ const LoginForm = () => {
                       <Link to="/register" className="label-text-alt link link-hover">Pas de compte ? S'inscrire</Link>
                     </label>
                   </div>
+                  {loginError && <div className="text-red-500 text-sm mb-4">{loginError}</div>}
                   <div className="form-control mt-6">
-                    <button className="btn btn-primary" type="submit">Connexion</button>
+                    <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? 'Connexion...' : 'Connexion'}
+                    </button>
                   </div>
                 </Form>
               )}
