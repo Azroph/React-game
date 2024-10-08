@@ -18,7 +18,7 @@ function App() {
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/" element={<h1 className="text-2xl font-bold text-center mt-10">Bienvenue sur MonApp</h1>} />
+            <Route path="/" element={<h1 className="text-2xl font-bold text-center mt-10">Bienvenue sur ShrekGame</h1>} />
           </Routes>
         </div>
       </Router>

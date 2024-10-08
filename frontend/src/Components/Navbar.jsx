@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import ThemeToggle from './ThemeToggle';
-
+import logo from '../assets/Shrek.png';
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -16,7 +16,9 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100 dark:bg-gray-800 shadow-lg">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost normal-case text-xl dark:text-white">MonApp</Link>
+        <Link to="/" className="btn btn-ghost normal-case text-xl dark:text-white">
+          <img src={logo} alt="Logo" className="h-full w-full object-contain" /> 
+        </Link>
       </div>
       <div className="flex-none">
         {isAuthenticated ? (
