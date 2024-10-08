@@ -17,7 +17,8 @@ const LoginForm = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await fetch('http://votre-api.com/login', {
+      console.log('Tentative de connexion avec:', values);
+      const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,18 +29,25 @@ const LoginForm = () => {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Erreur lors de la connexion');
+      console.log('Statut de la réponse:', response.status);
+      const responseData = await response.json();
+      console.log('Données de réponse:', responseData);
+
+      if (responseData.error) {
+        // Le serveur a renvoyé une erreur
+        throw new Error(responseData.error);
       }
 
-      const data = await response.json();
-      const { token } = data;
-      localStorage.setItem('token', token);
+      if (!responseData.token) {
+        throw new Error('Pas de token reçu du serveur');
+      }
+
+      localStorage.setItem('token', responseData.token);
       login();  // Met à jour le contexte d'authentification
       navigate('/dashboard');
     } catch (error) {
       console.error('Erreur de connexion', error);
-      setLoginError('Identifiants incorrects. Veuillez réessayer.');
+      setLoginError(error.message || 'Erreur lors de la connexion. Veuillez réessayer.');
     } finally {
       setSubmitting(false);
     }
