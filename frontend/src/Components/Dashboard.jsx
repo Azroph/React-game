@@ -1,28 +1,34 @@
 import React from 'react';
 
 const Dashboard = () => {
+  const handleCreateGame = () => {
+    // Logique pour créer une partie
+    console.log("Créer une partie");
+  };
+
+  const handleJoinGame = () => {
+    // Logique pour rejoindre une partie
+    console.log("Rejoindre une partie");
+  };
+
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">Tableau de bord</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">Statistiques</h2>
-            <p>Visualisez vos statistiques ici.</p>
-          </div>
-        </div>
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">Messages</h2>
-            <p>Consultez vos messages récents.</p>
-          </div>
-        </div>
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <h2 className="card-title">Tâches</h2>
-            <p>Gérez vos tâches en cours.</p>
-          </div>
-        </div>
+    <div className="p-4 flex flex-col items-center justify-center min-h-screen">
+      <h1 className="text-4xl font-bold mb-8">Tableau de bord</h1>
+      
+      <div className="flex space-x-4">
+        <button
+          onClick={handleCreateGame}
+          className="btn btn-primary text-white py-3 px-6 rounded-lg"
+        >
+          Créer une partie
+        </button>
+
+        <button
+          onClick={handleJoinGame}
+          className="btn btn-secondary text-white py-3 px-6 rounded-lg"
+        >
+          Rejoindre une partie
+        </button>
       </div>
     </div>
   );

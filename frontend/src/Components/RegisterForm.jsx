@@ -6,7 +6,6 @@ import * as Yup from 'yup';
 const Signup = () => {
   const navigate = useNavigate();
 
-  // Schéma de validation avec Yup
   const validationSchema = Yup.object({
     firstName: Yup.string().required('Le prénom est requis'),
     lastName: Yup.string().required('Le nom est requis'),
@@ -15,10 +14,8 @@ const Signup = () => {
     password: Yup.string().required('Le mot de passe est requis'),
   });
 
-  // Fonction pour gérer la soumission du formulaire
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      // Effectuer la requête d'inscription à l'API /register
       const response = await fetch('http://localhost:3000/register', {
         method: 'POST',
         headers: {
@@ -33,21 +30,19 @@ const Signup = () => {
         }),
       });
 
-      // Récupérer la réponse de l'API
       const data = await response.json();
 
       if (response.ok) {
-        // Rediriger vers la page de connexion en cas de succès
+        // Rediriger directement vers la page de connexion sans vérification
         navigate('/login');
       } else {
-        // Afficher les erreurs retournées par le serveur (ex: email déjà utilisé)
         alert(data.error || 'Une erreur est survenue lors de l\'inscription');
       }
     } catch (error) {
       console.error('Erreur lors de la requête:', error);
       alert('Erreur lors de l\'inscription. Veuillez réessayer.');
     } finally {
-      setSubmitting(false); // Fin du chargement
+      setSubmitting(false);
     }
   };
 

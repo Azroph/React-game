@@ -7,17 +7,15 @@ import * as Yup from 'yup';
 const LoginForm = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Email invalide').required('Email requis'),
-    password: Yup.string().required('Mot de passe requis')
+    password: Yup.string().required('Mot de passe requis'),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      console.log('Tentative de connexion avec:', values);
       const response = await fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
@@ -25,36 +23,27 @@ const LoginForm = () => {
         },
         body: JSON.stringify({
           email: values.email,
-          password: values.password
+          password: values.password,
         }),
       });
 
-      console.log('Statut de la réponse:', response.status);
       const responseData = await response.json();
-      console.log('Données de réponse:', responseData);
 
       if (responseData.error) {
-        // Le serveur a renvoyé une erreur
+        // Affichage de l'erreur spécifique renvoyée par le serveur
+        console.error('Erreur renvoyée par le serveur:', responseData.error);
         throw new Error(responseData.error);
       }
 
-      if (!responseData.token) {
-        throw new Error('Pas de token reçu du serveur');
-      }
-
-      localStorage.setItem('token', responseData.token);
+      // Suppression de la vérification
       login();  // Met à jour le contexte d'authentification
-      navigate('/dashboard');
+      navigate('/dashboard');  // Redirige vers le tableau de bord
     } catch (error) {
-      console.error('Erreur de connexion', error);
+      console.error('Erreur de connexion détaillée:', error);
       setLoginError(error.message || 'Erreur lors de la connexion. Veuillez réessayer.');
     } finally {
       setSubmitting(false);
     }
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
@@ -89,25 +78,13 @@ const LoginForm = () => {
                     <label className="label">
                       <span className="label-text">Mot de passe</span>
                     </label>
-                    <div className="relative">
-                      <Field
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        placeholder="mot de passe"
-                        className="input input-bordered w-full pr-12"
-                      />
-                      <button
-                        type="button"
-                        onClick={togglePasswordVisibility}
-                        className="absolute inset-y-0 right-0 px-3 flex items-center"
-                      >
-                        {showPassword ? '👁️' : '👁️‍🗨️'}
-                      </button>
-                    </div>
+                    <Field
+                      type="password"
+                      name="password"
+                      placeholder="mot de passe"
+                      className="input input-bordered"
+                    />
                     <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
-                    <label className="label">
-                      <Link to="/register" className="label-text-alt link link-hover">Pas de compte ? S'inscrire</Link>
-                    </label>
                   </div>
                   {loginError && <div className="text-red-500 text-sm mb-4">{loginError}</div>}
                   <div className="form-control mt-6">
