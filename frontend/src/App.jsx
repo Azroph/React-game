@@ -9,6 +9,7 @@ import RegisterForm from './Components/RegisterForm';
 import Dashboard from './Components/Dashboard';
 import PrivateRoute from './Components/PrivateRoute';
 import Home from './Components/Home';
+import Game from './Components/Game/Game';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/game" element={<Game />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route element={<PrivateRoute />}>
