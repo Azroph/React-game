@@ -21,7 +21,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex-none">
-        <Link to="/game" className="btn btn-ghost btn-sm rounded-btn dark:text-gray-200">Game</Link> {/* Nouveau lien */}
+        <Link to="/game" className="btn btn-ghost btn-sm rounded-btn dark:text-gray-200">Game</Link>
         {isAuthenticated ? (
           <>
             <Link to="/dashboard" className="btn btn-ghost btn-sm rounded-btn dark:text-gray-200">Dashboard</Link>
