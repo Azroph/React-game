@@ -49,13 +49,13 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="hero min-h-screen bg-base-200">
+        <div className="hero min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold">Connexion</h1>
-                    <p className="py-6">Connectez-vous pour accéder à votre espace personnel.</p>
+                    <h1 className="text-5xl font-bold dark:text-white">Connexion</h1>
+                    <p className="py-6 dark:text-gray-300">Connectez-vous pour accéder à votre espace personnel.</p>
                 </div>
-                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-white dark:bg-gray-800">
                     <div className="card-body">
                         <Formik
                             initialValues={{ email: '', password: '' }}
@@ -66,37 +66,46 @@ const LoginForm = () => {
                                 <Form>
                                     <div className="form-control">
                                         <label className="label">
-                                            <span className="label-text">Email</span>
+                                            <span className="label-text dark:text-gray-200">Email</span>
                                         </label>
                                         <Field
                                             type="email"
                                             name="email"
                                             placeholder="email"
-                                            className="input input-bordered"
+                                            className="input input-bordered bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
                                         />
                                         <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
                                     </div>
                                     <div className="form-control">
                                         <label className="label">
-                                            <span className="label-text">Mot de passe</span>
+                                            <span className="label-text dark:text-gray-200">Mot de passe</span>
                                         </label>
                                         <Field
                                             type="password"
                                             name="password"
                                             placeholder="mot de passe"
-                                            className="input input-bordered"
+                                            className="input input-bordered bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
                                         />
                                         <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
                                     </div>
                                     {loginError && <div className="text-red-500 text-sm mb-4">{loginError}</div>}
                                     <div className="form-control mt-6">
-                                        <button className="btn btn-primary" type="submit" disabled={isSubmitting}>
+                                        <button 
+                                            className="btn btn-primary dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white" 
+                                            type="submit" 
+                                            disabled={isSubmitting}
+                                        >
                                             {isSubmitting ? 'Connexion...' : 'Connexion'}
                                         </button>
                                     </div>
                                 </Form>
                             )}
                         </Formik>
+                        <div className="mt-4 text-center">
+                            <Link to="/register" className="text-blue-500 hover:underline dark:text-blue-400">
+                                Pas encore de compte ? Inscrivez-vous
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
