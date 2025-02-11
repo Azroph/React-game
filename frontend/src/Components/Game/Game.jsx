@@ -30,7 +30,7 @@ const Game = () => {
   };
 
   return (
-    <div className="game">
+    <div className="game content-center">
       <h1>Texas Hold'em Poker</h1>
       <Table communityCards={communityCards} stage={stage} />
       <PlayerHand player="Player 1" cards={player1Hand} />
