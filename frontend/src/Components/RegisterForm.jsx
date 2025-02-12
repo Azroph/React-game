@@ -69,7 +69,7 @@ const RegisterForm = () => {
                             )}
 
                             <div>
-                                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="firstName" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Prénom
                                 </label>
                                 <Field
@@ -85,7 +85,7 @@ const RegisterForm = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="lastName" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Nom
                                 </label>
                                 <Field
@@ -101,7 +101,7 @@ const RegisterForm = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="email" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Email
                                 </label>
                                 <Field
@@ -117,7 +117,7 @@ const RegisterForm = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="username" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Nom d'utilisateur
                                 </label>
                                 <Field
@@ -133,7 +133,7 @@ const RegisterForm = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="password" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Mot de passe
                                 </label>
                                 <Field
