@@ -39,13 +39,20 @@ const LoginForm = () => {
             }
 
             login();
-            navigate('/start-game');
+            navigate('/game');
         } catch (error) {
             console.error('Erreur de connexion détaillée:', error);
             setLoginError(error.message || 'Erreur lors de la connexion. Veuillez réessayer.');
         } finally {
             setSubmitting(false);
         }
+        if (responseData.token) {
+  localStorage.setItem('token', responseData.token);
+  // Stocke aussi l'ID de l'utilisateur pour le WebSocket
+  localStorage.setItem('userId', responseData.userId);
+  login();
+  navigate('/game'); // Redirige vers le lobby au lieu du dashboard
+}
     };
 
     return (
