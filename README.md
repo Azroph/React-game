@@ -45,8 +45,8 @@ npm install
 DB_NAME=database_name
 DB_USER=root
 DB_PASSWORD=votre_mot_de_passe
-DB_HOST=localhost
-DB_PORT=3306
+DB_HOST=host_name
+DB_PORT=XXXX
 ```
 
 4. Lancez le serveur :
