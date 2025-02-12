@@ -6,10 +6,11 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import fastifyJWT from "@fastify/jwt";
 import fastifyWebsocket from "@fastify/websocket";
+import socketioServer from "fastify-socket.io";
 import { usersRoutes } from "./routes/users.js";
 import { gamesRoutes } from "./routes/games.js";
 import { sequelize } from "./bdd.js";
-import { GameWebSocket } from "./websocket/GameWebSocket.js";
+import GameWebSocket from "./websocket/GameWebSocket.js";
 
 // Test de la connexion à la base de données
 try {

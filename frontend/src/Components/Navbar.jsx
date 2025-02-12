@@ -23,7 +23,7 @@ const Navbar = () => {
       <div className="flex-none">
         {isAuthenticated ? (
           <>
-            <button onClick={handleLogout} className="btn btn-ghost btn-sm rounded-btn dark:text-gray-200">Déconnexion</button>
+            <button onClick={handleLogout} className="btn btn-primary dark:bg-gray-700 btn-sm rounded-btn dark:text-gray-200">Déconnexion</button>
           </>
         ) : (
           <>
