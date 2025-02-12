@@ -33,87 +33,93 @@ const LoginForm = () => {
                 throw new Error(responseData.error);
             }
 
-            localStorage.setItem('token', responseData.token);
-            if (responseData.userId) {
+            if (responseData.token) {
+                localStorage.setItem('token', responseData.token);
                 localStorage.setItem('userId', responseData.userId);
+                login();
+                navigate('/game');
             }
-
-            login();
-            navigate('/game');
         } catch (error) {
             console.error('Erreur de connexion détaillée:', error);
             setLoginError(error.message || 'Erreur lors de la connexion. Veuillez réessayer.');
         } finally {
             setSubmitting(false);
         }
-        if (responseData.token) {
-  localStorage.setItem('token', responseData.token);
-  // Stocke aussi l'ID de l'utilisateur pour le WebSocket
-  localStorage.setItem('userId', responseData.userId);
-  login();
-  navigate('/game'); // Redirige vers le lobby au lieu du dashboard
-}
     };
 
     return (
-        <div className="hero min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
-            <div className="hero-content flex-col lg:flex-row-reverse">
-                <div className="text-center lg:text-left">
-                    <h1 className="text-5xl font-bold dark:text-white">Connexion</h1>
-                    <p className="py-6 dark:text-gray-300">Connectez-vous pour accéder à votre espace personnel.</p>
-                </div>
-                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-white dark:bg-gray-800">
-                    <div className="card-body">
-                        <Formik
-                            initialValues={{ email: '', password: '' }}
-                            validationSchema={validationSchema}
-                            onSubmit={handleSubmit}
-                        >
-                            {({ isSubmitting }) => (
-                                <Form>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text dark:text-gray-200">Email</span>
-                                        </label>
-                                        <Field
-                                            type="email"
-                                            name="email"
-                                            placeholder="email"
-                                            className="input input-bordered bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                                        />
-                                        <ErrorMessage name="email" component="div" className="text-red-500 text-sm mt-1" />
-                                    </div>
-                                    <div className="form-control">
-                                        <label className="label">
-                                            <span className="label-text dark:text-gray-200">Mot de passe</span>
-                                        </label>
-                                        <Field
-                                            type="password"
-                                            name="password"
-                                            placeholder="mot de passe"
-                                            className="input input-bordered bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600"
-                                        />
-                                        <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
-                                    </div>
-                                    {loginError && <div className="text-red-500 text-sm mb-4">{loginError}</div>}
-                                    <div className="form-control mt-6">
-                                        <button 
-                                            className="btn btn-primary dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white" 
-                                            type="submit" 
-                                            disabled={isSubmitting}
-                                        >
-                                            {isSubmitting ? 'Connexion...' : 'Connexion'}
-                                        </button>
-                                    </div>
-                                </Form>
+        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200 py-8">
+            <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+                <Formik
+                    initialValues={{ email: '', password: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {({ isSubmitting }) => (
+                        <Form className="space-y-4">
+                            <h2 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-white">
+                                Connexion
+                            </h2>
+
+                            {loginError && (
+                                <div className="p-3 mb-4 text-sm text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/20 rounded-md">
+                                    {loginError}
+                                </div>
                             )}
-                        </Formik>
-                        <div className="mt-4 text-center">
-                            <Link to="/register" className="text-blue-500 hover:underline dark:text-blue-400">
-                                Pas encore de compte ? Inscrivez-vous
-                            </Link>
-                        </div>
-                    </div>
+
+                            <div>
+                                <label htmlFor="email" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Email
+                                </label>
+                                <Field
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    className="w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 
+                                             bg-white dark:bg-gray-700 text-gray-900 dark:text-white 
+                                             focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                                    placeholder="Entrez votre email"
+                                />
+                                <ErrorMessage name="email" component="div" className="mt-1 text-sm text-red-600 dark:text-red-400" />
+                            </div>
+
+                            <div>
+                                <label htmlFor="password" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Mot de passe
+                                </label>
+                                <Field
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    className="w-full px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 
+                                             bg-white dark:bg-gray-700 text-gray-900 dark:text-white 
+                                             focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                                    placeholder="Entrez votre mot de passe"
+                                />
+                                <ErrorMessage name="password" component="div" className="mt-1 text-sm text-red-600 dark:text-red-400" />
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600
+                                         text-white font-semibold rounded-md shadow-sm transition-colors duration-200
+                                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                                         disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isSubmitting ? 'Connexion en cours...' : 'Se connecter'}
+                            </button>
+                        </Form>
+                    )}
+                </Formik>
+
+                <div className="mt-6 text-center">
+                    <Link 
+                        to="/register" 
+                        className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                    >
+                        Pas encore de compte ? Inscrivez-vous
+                    </Link>
                 </div>
             </div>
         </div>

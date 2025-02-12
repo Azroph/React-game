@@ -4,8 +4,14 @@ import { AuthContext } from './AuthContext';
 
 const PrivateRoute = () => {
   const { isAuthenticated } = useContext(AuthContext);
+  const token = localStorage.getItem('token');
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  // On vérifie à la fois le contexte et le token
+  if (!isAuthenticated && !token) {
+    return <Navigate to="/login" />;
+  }
+
+  return <Outlet />;
 };
 
 export default PrivateRoute;
