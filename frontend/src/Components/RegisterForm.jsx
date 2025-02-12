@@ -16,6 +16,7 @@ const RegisterForm = () => {
     });
 
     const handleSubmit = async (values, { setSubmitting }) => {
+        setError('');
         try {
             const response = await fetch('http://localhost:3000/register', {
                 method: 'POST',
@@ -33,10 +34,10 @@ const RegisterForm = () => {
 
             const data = await response.json();
 
-            if (response.ok) {
-                navigate('/login');
+            if (data.error) {
+                setError(data.error);
             } else {
-                setError(data.error || 'Une erreur est survenue lors de l\'inscription');
+                navigate('/login');
             }
         } catch (error) {
             console.error('Erreur lors de la requête:', error);
@@ -46,6 +47,7 @@ const RegisterForm = () => {
         }
     };
 
+    // ... reste du JSX inchangé ...
     return (
         <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200 py-8">
             <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
@@ -60,8 +62,14 @@ const RegisterForm = () => {
                                 Inscription
                             </h2>
                             
+                            {error && (
+                                <div className="p-3 mb-4 text-sm text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/20 rounded-md">
+                                    {error}
+                                </div>
+                            )}
+
                             <div>
-                                <label htmlFor="firstName" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Prénom
                                 </label>
                                 <Field
@@ -77,7 +85,7 @@ const RegisterForm = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="lastName" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Nom
                                 </label>
                                 <Field
@@ -93,7 +101,7 @@ const RegisterForm = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="email" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Email
                                 </label>
                                 <Field
@@ -109,7 +117,7 @@ const RegisterForm = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="username" className="text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Nom d'utilisateur
                                 </label>
                                 <Field
@@ -125,7 +133,7 @@ const RegisterForm = () => {
                             </div>
 
                             <div>
-                                <label htmlFor="password" className=" text-left block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                                     Mot de passe
                                 </label>
                                 <Field
@@ -139,12 +147,6 @@ const RegisterForm = () => {
                                 />
                                 <ErrorMessage name="password" component="div" className="mt-1 text-sm text-red-600 dark:text-red-400" />
                             </div>
-
-                            {error && (
-                                <div className="text-red-600 dark:text-red-400 text-sm text-center">
-                                    {error}
-                                </div>
-                            )}
 
                             <button
                                 type="submit"
