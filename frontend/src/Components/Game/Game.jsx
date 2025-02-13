@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 const ROWS = 6;
 const COLUMNS = 7;
 
-function Puissance4() {
+function Puissance4({ onBackToLobby }) {
   // États du jeu
   const [board, setBoard] = useState(
     Array(ROWS).fill(null).map(() => Array(COLUMNS).fill(null))
@@ -162,8 +162,10 @@ function Puissance4() {
         {/* Conteneur du jeu */}
         <div className="w-full max-w-2xl bg-white/80 backdrop-blur-lg shadow-2xl rounded-2xl overflow-hidden">
           {/* En-tête du jeu */}
-          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-center">
-            <h1 className="text-3xl font-bold text-white drop-shadow-md">Puissance 4</h1>
+          <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 flex justify-between items-center">
+            <h1 className="text-3xl font-bold text-white drop-shadow-md flex-grow text-center">Puissance 4</h1>
+            {/* Espace pour garder la symétrie */}
+            <div className="w-20"></div>
           </div>
 
           {/* Conteneur principal */}
@@ -229,8 +231,8 @@ function Puissance4() {
               </div>
             )}
 
-            {/* Bouton Nouvelle Partie */}
-            <div className="flex justify-center mt-6">
+            {/* Boutons de contrôle */}
+            <div className="flex justify-center space-x-4 mt-6">
               <button 
                 onClick={resetGame} 
                 className="bg-gradient-to-r from-blue-500 to-indigo-600 
@@ -241,6 +243,17 @@ function Puissance4() {
                            shadow-md hover:shadow-xl"
               >
                 Nouvelle Partie
+              </button>
+              <button 
+                onClick={onBackToLobby} 
+                className="bg-gradient-to-r from-red-500 to-red-700 
+                           text-white font-bold py-3 px-6 rounded-full 
+                           hover:from-red-600 hover:to-red-800 
+                           transition-all duration-300 
+                           transform hover:scale-105 
+                           shadow-md hover:shadow-xl"
+              >
+                Retour au Lobby
               </button>
             </div>
           </div>

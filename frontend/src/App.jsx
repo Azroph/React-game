@@ -9,6 +9,7 @@ import RegisterForm from './Components/RegisterForm';
 import PrivateRoute from './Components/PrivateRoute';
 import Home from './Components/Home';
 import Game from './Components/Game/Game';
+import LobbyPage from './Components/Game/Lobby';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route element={<PrivateRoute />}>
-              <Route path="/game" element={<Game />} />
+              <Route path="/game" element={<LobbyPage />} />
             </Route>
           </Routes>
         </div>

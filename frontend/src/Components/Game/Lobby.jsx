@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Puissance4 from './Puissance4';
+import Game from './Game';
 
-function App() {
+function LobbyPage() {
   const [isInGame, setIsInGame] = useState(false);
 
   const startGame = () => {
@@ -13,7 +13,7 @@ function App() {
   };
 
   return isInGame ? (
-    <Puissance4 onBackToLobby={returnToLobby} />
+    <Game onBackToLobby={returnToLobby} />
   ) : (
     <Lobby onStartGame={startGame} />
   );
@@ -53,6 +53,16 @@ function Lobby({ onStartGame }) {
           >
             Commencer la Partie
           </button>
+          <button 
+            className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 
+                       text-white font-bold py-4 px-8 rounded-full 
+                       hover:from-blue-600 hover:to-indigo-700 
+                       transition-all duration-300 
+                       transform hover:scale-105 
+                       shadow-lg hover:shadow-xl text-xl"
+          >
+            Rejoindre une Partie
+          </button>
 
           <div className="text-sm text-gray-600">
             <p>Règles : Alignez 4 jetons de votre couleur pour gagner !</p>
@@ -63,4 +73,4 @@ function Lobby({ onStartGame }) {
   );
 }
 
-export default App;
+export default LobbyPage;
